@@ -105,5 +105,55 @@
             </button>
         </div>
     </div>
+
+     <script>
+        const TODO_ITEMS = ["Read Books", "Go To College", "Buy Groceries"];
+
+        const todoContainer = document.getElementById("todo-container");
+
+        function loadToDoItem() {
+            const TODO_ITEMS = JSON.parse(
+                localStorage.getItem("TODO_ITEMS") || "[]",
+            );
+
+            todoContainer.innerHTML = "";
+
+            for (let i = 0; i < TODO_ITEMS.length; i++) {
+                const currentItem = TODO_ITEMS[i];
+
+                todoContainer.innerHTML =
+                    todoContainer.innerHTML +
+                    `<div class="todo-items">${currentItem} <img src='delete.png' class='delete-todo-item' onclick='deleteToDoItem(${i})'/></div>`;
+            }
+        }
+
+        loadToDoItem();
+
+        function addToDoItem() {
+            const todoinputElement = document.getElementById("new-todo-item");
+
+            const storedToDoItems = JSON.parse(
+                localStorage.getItem("TODO_ITEMS") || "[]",
+            );
+
+            storedToDoItems.push(todoinputElement.value);
+
+            localStorage.setItem("TODO_ITEMS", JSON.stringify(storedToDoItems));
+
+            loadToDoItem();
+            todoinputElement.value = "";
+        }
+
+        function deleteToDoItem(index) {
+            const storedToDoItems = JSON.parse(
+                localStorage.getItem("TODO_ITEMS") || "[]",
+            );
+
+            storedToDoItems.splice(index, 1);
+            localStorage.setItem("TODO_ITEMS", JSON.stringify(storedToDoItems));
+
+            loadToDoItem();
+        }
+    </script>
 </body>
 </html>
